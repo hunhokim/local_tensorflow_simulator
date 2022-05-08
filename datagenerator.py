@@ -22,7 +22,7 @@ class DataGenerator:
             min_value = config['min_value']
             max_value = config['max_value']
 
-            if isinstance(min_value, numbers.Number) or isinstance(max_value, numbers.Number):
+            if (not isinstance(min_value, numbers.Number)) or (not isinstance(max_value, numbers.Number)):
                 raise TypeError("min_value and max_value in the configuration file should be numeric.")
             if min_value > max_value:
                 raise ValueError("min_value should be smaller than max_value.")
@@ -39,9 +39,7 @@ class DataGenerator:
         return dict_features
 
     def _make_feature_labels(self, function, dict_features):
-        labels = function(dict_features)
-
-        return labels
+        return function(dict_features)
 
     def generate_data(self, function):
         if not callable(function):
